@@ -6,17 +6,17 @@ using UnityEngine;
 namespace UnityExtensions
 {
     /// <summary>
-    /// <see cref="Component"/>の拡張メソッド.
+    /// Extension methods for <see cref="Component"/>.
     /// </summary>
     public static class ComponentExtensions
     {
         /// <summary>
-        /// 安全な<see cref="Component.GetComponent{T}"/>.
+        /// Safe <see cref="Component.GetComponent{T}"/>.
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class SafeGetComponentExample : MonoBehaviour
@@ -25,18 +25,18 @@ namespace UnityExtensions
         ///
         ///     private void Update()
         ///     {
-        ///         hinge ??= this.SafeGetComponent<HingeJoint>();
-        ///         hinge.useSpring = false;
+        ///         _hinge ??= this.SafeGetComponent<HingeJoint>();
+        ///         _hinge.useSpring = false;
         ///     }
         /// }
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="self">対象の<see cref="Component"/>.</param>
-        /// <typeparam name="T">取得したいコンポーネントの型.</typeparam>
-        /// <returns>取得したコンポーネントインスタンス.なお取得不可の場合はSystemのnullを返す.</returns>
+        /// <param name="self">The target <see cref="Component"/>.</param>
+        /// <typeparam name="T">The type of component to retrieve.</typeparam>
+        /// <returns>The retrieved component instance. If the component cannot be obtained, returns System's null.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T SafeGetComponent<T>(this Component self) where T : Component
+        public static T? SafeGetComponent<T>(this Component self) where T : Component
         {
             self.gameObject.TryGetComponent<T>(out var component);
             return component;

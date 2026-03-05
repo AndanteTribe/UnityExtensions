@@ -7,17 +7,17 @@ using UnityEngine;
 namespace UnityExtensions
 {
     /// <summary>
-    /// <see cref="RectTransform"/>の拡張メソッド.
+    /// Extension methods for <see cref="RectTransform"/>.
     /// </summary>
     public static class RectTransformExtensions
     {
         /// <summary>
-        /// <see cref="RectTransform.sizeDelta"/>よりも安全なサイズ設定.
+        /// Safer size setting than <see cref="RectTransform.sizeDelta"/>.
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class SetSizeExample : MonoBehaviour
@@ -31,9 +31,9 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="width">横の長さ.</param>
-        /// <param name="height">縦の長さ.</param>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="width">The width.</param>
+        /// <param name="height">The height.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetSize(this RectTransform rectTransform, in float width, in float height)
         {
@@ -42,12 +42,12 @@ namespace UnityExtensions
         }
 
         /// <summary>
-        /// <see cref="RectTransform.sizeDelta"/>よりも安全なサイズ設定.
+        /// Safer size setting than <see cref="RectTransform.sizeDelta"/>.
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class SetSizeExample : MonoBehaviour
@@ -62,8 +62,8 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="size">任意の縦横サイズ.</param>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="size">The width and height size.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetSize(this RectTransform rectTransform, in Vector2 size)
         {
@@ -72,12 +72,12 @@ namespace UnityExtensions
         }
 
         /// <summary>
-        /// <see cref="RectTransform.sizeDelta"/>よりも安全な横幅設定.
+        /// Safer width setting than <see cref="RectTransform.sizeDelta"/>.
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class SetWidthExample : MonoBehaviour
@@ -91,19 +91,19 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="width">横の長さ.</param>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="width">The width.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetWidth(this RectTransform rectTransform, in float width) =>
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
 
         /// <summary>
-        /// <see cref="RectTransform.sizeDelta"/>よりも安全な縦幅設定.
+        /// Safer height setting than <see cref="RectTransform.sizeDelta"/>.
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class SetHeightExample : MonoBehaviour
@@ -117,19 +117,19 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="height">縦の長さ.</param>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="height">The height.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetHeight(this RectTransform rectTransform, in float height) =>
             rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, height);
 
         /// <summary>
-        /// <see cref="RectTransform.sizeDelta"/>よりも安全なサイズ取得.
+        /// Safer size retrieval than <see cref="RectTransform.sizeDelta"/>.
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class GetSizeExample : MonoBehaviour
@@ -144,18 +144,18 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <returns>対象のサイズ.</returns>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <returns>The size of the target.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 GetSize(this RectTransform rectTransform) => rectTransform.rect.size;
 
         /// <summary>
-        /// <see cref="RectTransform"/>を全面的に伸ばす(stretch * stretchにする).
+        /// Stretches <see cref="RectTransform"/> fully (stretch * stretch).
         /// </summary>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class SetFullStretchExample : MonoBehaviour
@@ -169,11 +169,11 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="left">左端のオフセット.</param>
-        /// <param name="right">右端のオフセット.</param>
-        /// <param name="top">上端のオフセット.</param>
-        /// <param name="bottom">下端のオフセット.</param>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="left">The offset of the left edge.</param>
+        /// <param name="right">The offset of the right edge.</param>
+        /// <param name="top">The offset of the top edge.</param>
+        /// <param name="bottom">The offset of the bottom edge.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void SetFullStretch(this RectTransform rectTransform, in float left = 0, in float right = 0, in float top = 0, in float bottom = 0)
         {
@@ -184,16 +184,16 @@ namespace UnityExtensions
         }
 
         /// <summary>
-        /// ワールドスペースで計算された長方形の角を取得する.
+        /// Gets the corners of a rectangle calculated in world space.
         /// </summary>
         /// <remarks>
-        /// <see cref="RectTransform.GetWorldCorners(Vector3[])"/>に同じ.
+        /// Same as <see cref="RectTransform.GetWorldCorners(Vector3[])"/>.
         /// </remarks>
         /// <example>
         /// <code>
         /// <![CDATA[
         /// using System;
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class GetWorldCornersExampleClass : MonoBehaviour
@@ -221,9 +221,9 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="fourCornersSpan">取得した角の座標を格納する<see cref="Span{T}"/>.</param>
-        /// <returns>取得した角の座標を格納した<see cref="ReadOnlySpan{T}"/>.</returns>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="fourCornersSpan">The <see cref="Span{T}"/> to store the retrieved corner coordinates.</param>
+        /// <returns>The <see cref="ReadOnlySpan{T}"/> containing the retrieved corner coordinates.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ReadOnlySpan<Vector3> GetWorldCorners(this RectTransform rectTransform, in Span<Vector3> fourCornersSpan)
         {
@@ -244,16 +244,16 @@ namespace UnityExtensions
         }
 
         /// <summary>
-        /// <see cref="RectTransform"/>のローカル空間で計算された長方形の角を取得する.
+        /// Gets the corners of a rectangle calculated in local space of the <see cref="RectTransform"/>.
         /// </summary>
         /// <remarks>
-        /// <see cref="RectTransform.GetLocalCorners(Vector3[])"/>に同じ.
+        /// Same as <see cref="RectTransform.GetLocalCorners(Vector3[])"/>.
         /// </remarks>
         /// <example>
         /// <code>
         /// <![CDATA[
         /// using System;
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class GetLocalCornersExampleClass : MonoBehaviour
@@ -283,9 +283,9 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="fourCornersSpan">取得した角の座標を格納する<see cref="Span{T}"/>.</param>
-        /// <returns>取得した角の座標を格納した<see cref="ReadOnlySpan{T}"/>.</returns>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="fourCornersSpan">The <see cref="Span{T}"/> to store the retrieved corner coordinates.</param>
+        /// <returns>The <see cref="ReadOnlySpan{T}"/> containing the retrieved corner coordinates.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ReadOnlySpan<Vector3> GetLocalCorners(this RectTransform rectTransform, in Span<Vector3> fourCornersSpan)
         {
@@ -301,14 +301,14 @@ namespace UnityExtensions
         }
 
         /// <summary>
-        /// <see cref="RectTransform"/>のローカル空間で計算された長方形の角を取得する.
+        /// Gets the corners of a rectangle calculated in local space of the <see cref="RectTransform"/>.
         /// </summary>
         /// <remarks>
-        /// <see cref="RectTransform.GetLocalCorners(Vector3[])"/>に同じ.
+        /// Same as <see cref="RectTransform.GetLocalCorners(Vector3[])"/>.
         /// </remarks>
-        /// <param name="rectTransform">対象の<see cref="RectTransform"/>.</param>
-        /// <param name="fourCornersSpan">取得した角の座標を格納する<see cref="Span{T}"/>.</param>
-        /// <returns>取得した角の座標を格納した<see cref="ReadOnlySpan{T}"/>.</returns>
+        /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
+        /// <param name="fourCornersSpan">The <see cref="Span{T}"/> to store the retrieved corner coordinates.</param>
+        /// <returns>The <see cref="ReadOnlySpan{T}"/> containing the retrieved corner coordinates.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void GetCalculateLocalCorners(this RectTransform rectTransform, in Span<Vector3> fourCornersSpan)
         {

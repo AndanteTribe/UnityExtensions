@@ -6,23 +6,23 @@ using UnityEngine;
 namespace UnityExtensions
 {
     /// <summary>
-    /// <see cref="Vector3"/>の拡張クラス.
+    /// Extension methods for <see cref="Vector3"/>.
     /// </summary>
     public static class VectorExtensions
     {
         /// <summary>
-        /// <see cref="Vector3"/>のXZ成分だけ取り出す.
+        /// Extracts the X and Z components from <see cref="Vector3"/>.
         /// </summary>
-        /// <param name="target">対象.</param>
-        /// <returns>対象のx成分をx, z成分をyに保持する<see cref="Vector2"/>.</returns>
+        /// <param name="target">The target Vector3.</param>
+        /// <returns>A <see cref="Vector2"/> where the X component of the target is stored in X, and the Z component is stored in Y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 XZ(in this Vector3 target) => new Vector2(target.x, target.z);
 
         /// <summary>
-        /// <see cref="Vector3"/>のYZ成分だけ取り出す.
+        /// Extracts the Y and Z components from <see cref="Vector3"/>.
         /// </summary>
-        /// <param name="target">対象.</param>
-        /// <returns>対象のy成分をx, z成分をzに保持する<see cref="Vector2"/>.</returns>
+        /// <param name="target">The target Vector3.</param>
+        /// <returns>A <see cref="Vector2"/> where the Y component of the target is stored in X, and the Z component is stored in Y.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 YZ(in this Vector3 target) => new Vector2(target.y, target.z);
     }

@@ -8,29 +8,60 @@ using UnityEngine;
 namespace UnityExtensions
 {
     /// <summary>
-    /// <see cref="GameObject"/>の拡張メソッド.
+    /// Extension methods for <see cref="GameObject"/>.
     /// </summary>
     public static class GameObjectExtensions
     {
         /// <summary>
-        /// ゲームオブジェクトの階層パスを取得する.
+        /// Safe <see cref="GameObject.GetComponent{T}"/>.
         /// </summary>
-        /// <param name="gameObject">対象のゲームオブジェクト.</param>
-        /// <param name="includeScene">シーン名を含めるかどうか.</param>
-        /// <returns>階層パス.</returns>
         /// <example>
         /// <code>
         /// <![CDATA[
-        /// using AndanteTribe.Utils.Unity;
+        /// using UnityExtensions;
+        /// using UnityEngine;
+        ///
+        /// public class SafeGetComponentExample : MonoBehaviour
+        /// {
+        ///     private HingeJoint _hinge;
+        ///
+        ///     private void Update()
+        ///     {
+        ///         _hinge ??= this.gameObject.SafeGetComponent<HingeJoint>();
+        ///         _hinge.useSpring = false;
+        ///     }
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <param name="gameObject">The target <see cref="GameObject"/>.</param>
+        /// <typeparam name="T">The type of component to retrieve.</typeparam>
+        /// <returns>The retrieved component instance. If the component cannot be obtained, returns System's null.</returns>
+        public static T? SafeGetComponent<T>(this GameObject gameObject) where T : Component
+        {
+            gameObject.TryGetComponent<T>(out var component);
+            return component;
+        }
+
+        /// <summary>
+        /// Gets the hierarchy path of a game object.
+        /// </summary>
+        /// <param name="gameObject">The target game object.</param>
+        /// <param name="includeScene">Whether to include the scene name.</param>
+        /// <returns>The hierarchy path.</returns>
+        /// <example>
+        /// <code>
+        /// <![CDATA[
+        /// using UnityExtensions;
         /// using UnityEngine;
         ///
         /// public class GetHierarchyPathExample : MonoBehaviour
         /// {
         ///     private void Start()
         ///     {
-        ///         // シーン名を含める (デフォルト)
+        ///         // Include scene name (default)
         ///         Debug.Log(this.gameObject.GetHierarchyPath());
-        ///         // シーン名を含めない
+        ///         // Exclude scene name
         ///         Debug.Log(this.gameObject.GetHierarchyPath(false));
         ///     }
         /// }

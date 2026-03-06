@@ -1,4 +1,4 @@
-name: unity-meta--check
+name: unity-meta-check
 on:
   pull_request:
     types:

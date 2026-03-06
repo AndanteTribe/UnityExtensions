@@ -78,18 +78,23 @@ namespace UnityExtensions
 
             var container = new NativeArray<char>(16, Allocator.Temp);
             var written = 0;
-            if (includeScene)
+            try
             {
-                var sceneName = gameObject.scene.name;
-                sceneName = string.IsNullOrEmpty(sceneName) ? "Unsaved Scene" : sceneName;
-                AppendLiteral(ref container, ref written, sceneName);
-                AppendLiteral(ref container, ref written, "/");
-            }
+                if (includeScene)
+                {
+                    var sceneName = gameObject.scene.name;
+                    sceneName = string.IsNullOrEmpty(sceneName) ? "Unsaved Scene" : sceneName;
+                    AppendLiteral(ref container, ref written, sceneName);
+                    AppendLiteral(ref container, ref written, "/");
+                }
 
-            GetTransformPath(gameObject.transform, ref container, ref written);
-            var result = new string(container.AsSpan()[..written]);
-            container.Dispose();
-            return result;
+                GetTransformPath(gameObject.transform, ref container, ref written);
+                return container.AsSpan()[..written].ToString();
+            }
+            finally
+            {
+                container.Dispose();
+            }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             static void GetTransformPath(Transform transform, ref NativeArray<char> container, ref int written)

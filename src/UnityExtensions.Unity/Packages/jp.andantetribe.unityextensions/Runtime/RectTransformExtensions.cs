@@ -229,18 +229,18 @@ namespace UnityExtensions
         {
             if (fourCornersSpan.IsEmpty || fourCornersSpan.Length < 4)
             {
-                Debug.LogError("Calling GetWorldCorners with an array that is null or has less than 4 elements.");
+                Debug.LogError("Calling GetWorldCorners with a fourCornersSpan that is empty or has less than 4 elements.");
+                return ReadOnlySpan<Vector3>.Empty;
             }
-            else
+
+            var result = fourCornersSpan[..4];
+            rectTransform.GetCalculateLocalCorners(result);
+            var localToWorldMatrix = rectTransform.localToWorldMatrix;
+            for (var i = 0; i < result.Length; i++)
             {
-                rectTransform.GetCalculateLocalCorners(fourCornersSpan);
-                var localToWorldMatrix = rectTransform.localToWorldMatrix;
-                for (var i = 0; i < fourCornersSpan.Length; i++)
-                {
-                    fourCornersSpan[i] = localToWorldMatrix.MultiplyPoint(fourCornersSpan[i]);
-                }
+                result[i] = localToWorldMatrix.MultiplyPoint(result[i]);
             }
-            return fourCornersSpan[..4];
+            return result;
         }
 
         /// <summary>
@@ -292,11 +292,10 @@ namespace UnityExtensions
             if (fourCornersSpan.IsEmpty || fourCornersSpan.Length < 4)
             {
                 Debug.LogError("Calling GetLocalCorners with an array that is null or has less than 4 elements.");
+                return ReadOnlySpan<Vector3>.Empty;
             }
-            else
-            {
-                rectTransform.GetCalculateLocalCorners(fourCornersSpan);
-            }
+
+            rectTransform.GetCalculateLocalCorners(fourCornersSpan);
             return fourCornersSpan[..4];
         }
 

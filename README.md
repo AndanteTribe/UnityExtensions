@@ -2,7 +2,6 @@
 [![unity-meta-check](https://github.com/AndanteTribe/UnityExtensions/actions/workflows/unity-meta-check.yml/badge.svg)](https://github.com/AndanteTribe/UnityExtensions/actions/workflows/unity-meta-check.yml)
 [![Releases](https://img.shields.io/github/release/AndanteTribe/UnityExtensions.svg)](https://github.com/AndanteTribe/UnityExtensions/releases)
 [![GitHub license](https://img.shields.io/github/license/AndanteTribe/UnityExtensions.svg)](./LICENSE)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/AndanteTribe/UnityExtensions)
 
 English | [日本語](README_JA.md)
 
@@ -12,7 +11,7 @@ English | [日本語](README_JA.md)
 It offers safe, performant, and convenient extension methods for commonly used Unity classes such as `Component`, `GameObject`, `Transform`, `RectTransform`, and `Vector3`.
 
 ## Requirements
-- Unity 2021.3 or later
+- Unity 2022.3 or later
 
 ## Installation
 Open `Window > Package Manager`, select `[+] > Add package from git URL`, and enter the following URL:
@@ -119,16 +118,95 @@ public class Example : MonoBehaviour
 
 Extension methods for `RectTransform`, offering safer alternatives to `sizeDelta`.
 
-| Method | Description |
-|--------|-------------|
-| `SetSize(float width, float height)` | Sets the size of the `RectTransform`. |
-| `SetSize(Vector2 size)` | Sets the size of the `RectTransform` using a `Vector2`. |
-| `SetWidth(float width)` | Sets the width of the `RectTransform`. |
-| `SetHeight(float height)` | Sets the height of the `RectTransform`. |
-| `GetSize()` | Gets the size of the `RectTransform`. |
-| `SetFullStretch(float left, float right, float top, float bottom)` | Stretches the `RectTransform` fully (stretch × stretch). |
-| `GetWorldCorners(Span<Vector3>)` | Gets the four corners of the rectangle in world space. |
-| `GetLocalCorners(Span<Vector3>)` | Gets the four corners of the rectangle in local space. |
+#### `SetSize(float width, float height)`
+Sets the width and height of the `RectTransform` using `SetSizeWithCurrentAnchors`.
+
+```csharp
+using UnityExtensions;
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        RectTransform rectTransform = (RectTransform)transform;
+        rectTransform.SetSize(100f, 100f);
+    }
+}
+```
+
+#### `SetSize(Vector2 size)`
+Sets the size of the `RectTransform` using a `Vector2`.
+
+```csharp
+using UnityExtensions;
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        RectTransform rectTransform = (RectTransform)transform;
+        var size = new Vector2(100f, 100f);
+        rectTransform.SetSize(size);
+    }
+}
+```
+
+#### `SetWidth(float width)`
+Sets only the width of the `RectTransform`.
+
+```csharp
+using UnityExtensions;
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        RectTransform rectTransform = (RectTransform)transform;
+        rectTransform.SetWidth(100f);
+    }
+}
+```
+
+#### `SetHeight(float height)`
+Sets only the height of the `RectTransform`.
+
+```csharp
+using UnityExtensions;
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        RectTransform rectTransform = (RectTransform)transform;
+        rectTransform.SetHeight(100f);
+    }
+}
+```
+
+#### `GetSize()`
+Gets the actual rendered size of the `RectTransform` via `rect.size`, which is more reliable than `sizeDelta`.
+
+```csharp
+using UnityExtensions;
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private void Start()
+    {
+        RectTransform rectTransform = (RectTransform)transform;
+        Vector2 size = rectTransform.GetSize();
+        Debug.Log("Size : " + size.ToString());
+    }
+}
+```
+
+#### `SetFullStretch(float left = 0, float right = 0, float top = 0, float bottom = 0)`
+Configures the `RectTransform` to fully stretch (anchor min `(0,0)`, anchor max `(1,1)`) with optional edge offsets.
 
 ```csharp
 using UnityExtensions;
@@ -140,10 +218,70 @@ public class Example : MonoBehaviour
     {
         RectTransform rectTransform = (RectTransform)transform;
 
-        rectTransform.SetSize(100f, 200f);
+        // Full stretch with no offsets
         rectTransform.SetFullStretch();
 
-        Vector2 size = rectTransform.GetSize();
+        // Full stretch with 10px padding on each side
+        rectTransform.SetFullStretch(left: 10f, right: 10f, top: 10f, bottom: 10f);
+    }
+}
+```
+
+#### `GetWorldCorners(Span<Vector3> fourCornersSpan)`
+Gets the four corners of the rectangle in world space. The `Span<Vector3>` must have a length of at least 4.  
+Corner order: bottom-left, top-left, top-right, bottom-right.
+
+```csharp
+using System;
+using UnityExtensions;
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private RectTransform _rectTransform;
+
+    private void Start()
+    {
+        _rectTransform = (RectTransform)transform;
+
+        var corners = (stackalloc Vector3[4]);
+        _rectTransform.GetWorldCorners(corners);
+
+        Debug.Log("World Corners");
+        for (var i = 0; i < 4; i++)
+        {
+            Debug.Log("World Corner " + i + " : " + corners[i]);
+        }
+    }
+}
+```
+
+#### `GetLocalCorners(Span<Vector3> fourCornersSpan)`
+Gets the four corners of the rectangle in the local space of the `RectTransform`. The `Span<Vector3>` must have a length of at least 4.  
+Corner order: bottom-left, top-left, top-right, bottom-right.
+
+```csharp
+using System;
+using UnityExtensions;
+using UnityEngine;
+
+public class Example : MonoBehaviour
+{
+    private RectTransform _rectTransform;
+
+    private void Start()
+    {
+        _rectTransform = (RectTransform)transform;
+
+        var corners = (stackalloc Vector3[4]);
+        _rectTransform.rotation = Quaternion.AngleAxis(45, Vector3.forward);
+        _rectTransform.GetLocalCorners(corners);
+
+        Debug.Log("Local Corners");
+        for (var i = 0; i < 4; i++)
+        {
+            Debug.Log("Local Corner " + i + " : " + corners[i]);
+        }
     }
 }
 ```

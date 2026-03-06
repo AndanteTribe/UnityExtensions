@@ -89,15 +89,15 @@ Extension methods for setting or modifying individual components of `Transform.p
 
 | Method | Description |
 |--------|-------------|
-| `SetX(float x)` | Sets the X component of `position`. |
-| `AddX(float x)` | Adds to the X component of `position`. |
-| `SubX(float x)` | Subtracts from the X component of `position`. |
-| `SetY(float y)` | Sets the Y component of `position`. |
-| `AddY(float y)` | Adds to the Y component of `position`. |
-| `SubY(float y)` | Subtracts from the Y component of `position`. |
-| `SetZ(float z)` | Sets the Z component of `position`. |
-| `AddZ(float z)` | Adds to the Z component of `position`. |
-| `SubZ(float z)` | Subtracts from the Z component of `position`. |
+| `SetPosX(float x)` | Sets the X component of `position`. |
+| `AddPosX(float x)` | Adds to the X component of `position`. |
+| `SubPosX(float x)` | Subtracts from the X component of `position`. |
+| `SetPosY(float y)` | Sets the Y component of `position`. |
+| `AddPosY(float y)` | Adds to the Y component of `position`. |
+| `SubPosY(float y)` | Subtracts from the Y component of `position`. |
+| `SetPosZ(float z)` | Sets the Z component of `position`. |
+| `AddPosZ(float z)` | Adds to the Z component of `position`. |
+| `SubPosZ(float z)` | Subtracts from the Z component of `position`. |
 
 ```csharp
 using UnityExtensions;
@@ -107,9 +107,9 @@ public class Example : MonoBehaviour
 {
     private void Update()
     {
-        transform.SetX(1.0f);
-        transform.AddY(0.1f);
-        transform.SubZ(0.5f);
+        transform.SetPosX(1.0f);
+        transform.AddPosY(0.1f);
+        transform.SubPosZ(0.5f);
     }
 }
 ```

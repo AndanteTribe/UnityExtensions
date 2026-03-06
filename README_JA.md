@@ -3,18 +3,18 @@
 [![Releases](https://img.shields.io/github/release/AndanteTribe/UnityExtensions.svg)](https://github.com/AndanteTribe/UnityExtensions/releases)
 [![GitHub license](https://img.shields.io/github/license/AndanteTribe/UnityExtensions.svg)](./LICENSE)
 
-English | [日本語](README_JA.md)
+[English](README.md) | 日本語
 
-## Overview
-**UnityExtensions** is a library that provides extension methods for Unity's core components and types.
+## 概要
+**UnityExtensions** は、Unity のコアコンポーネントおよび型に対する拡張メソッドを提供するライブラリです。
 
-It offers safe, performant, and convenient extension methods for commonly used Unity classes such as `Component`, `GameObject`, `Transform`, `RectTransform`, and `Vector3`.
+`Component`、`GameObject`、`Transform`、`RectTransform`、`Vector3` など、Unity でよく使用されるクラスに対して、安全で高パフォーマンスかつ便利な拡張メソッドを提供します。
 
-## Requirements
-- Unity 2022.3 or later
+## 動作要件
+- Unity 2022.3 以降
 
-## Installation
-Open `Window > Package Manager`, select `[+] > Add package from git URL`, and enter the following URL:
+## インストール
+`Window > Package Manager` を開き、`[+] > Add package from git URL` を選択し、以下の URL を入力してください。
 
 ```
 https://github.com/AndanteTribe/UnityExtensions.git?path=src/UnityExtensions.Unity/Packages/jp.andantetribe.unityextensions
@@ -25,7 +25,7 @@ https://github.com/AndanteTribe/UnityExtensions.git?path=src/UnityExtensions.Uni
 ### ComponentExtensions
 
 #### `SafeGetComponent<T>()`
-A safe alternative to `Component.GetComponent<T>()`. Returns System's `null` instead of throwing if the component is not found.
+`Component.GetComponent<T>()` の安全な代替メソッドです。コンポーネントが見つからない場合、例外をスローする代わりに System の `null` を返します。
 
 ```csharp
 using UnityExtensions;
@@ -46,7 +46,7 @@ public class Example : MonoBehaviour
 ### GameObjectExtensions
 
 #### `SafeGetComponent<T>()`
-A safe alternative to `GameObject.GetComponent<T>()`. Returns System's `null` instead of throwing if the component is not found.
+`GameObject.GetComponent<T>()` の安全な代替メソッドです。コンポーネントが見つからない場合、例外をスローする代わりに System の `null` を返します。
 
 ```csharp
 using UnityExtensions;
@@ -65,7 +65,7 @@ public class Example : MonoBehaviour
 ```
 
 #### `GetHierarchyPath(bool includeScene = true)`
-Gets the full hierarchy path of a `GameObject`.
+`GameObject` のヒエラルキーパスを取得します。
 
 ```csharp
 using UnityExtensions;
@@ -75,9 +75,9 @@ public class Example : MonoBehaviour
 {
     private void Start()
     {
-        // Include scene name (default)
+        // シーン名を含む（デフォルト）
         Debug.Log(this.gameObject.GetHierarchyPath());
-        // Exclude scene name
+        // シーン名を含まない
         Debug.Log(this.gameObject.GetHierarchyPath(false));
     }
 }
@@ -85,19 +85,19 @@ public class Example : MonoBehaviour
 
 ### TransformExtensions
 
-Extension methods for setting or modifying individual components of `Transform.position`.
+`Transform.position` の各成分を設定・変更するための拡張メソッドです。
 
-| Method | Description |
-|--------|-------------|
-| `SetX(float x)` | Sets the X component of `position`. |
-| `AddX(float x)` | Adds to the X component of `position`. |
-| `SubX(float x)` | Subtracts from the X component of `position`. |
-| `SetY(float y)` | Sets the Y component of `position`. |
-| `AddY(float y)` | Adds to the Y component of `position`. |
-| `SubY(float y)` | Subtracts from the Y component of `position`. |
-| `SetZ(float z)` | Sets the Z component of `position`. |
-| `AddZ(float z)` | Adds to the Z component of `position`. |
-| `SubZ(float z)` | Subtracts from the Z component of `position`. |
+| メソッド | 説明 |
+|--------|------|
+| `SetX(float x)` | `position` の X 成分を設定します。 |
+| `AddX(float x)` | `position` の X 成分に加算します。 |
+| `SubX(float x)` | `position` の X 成分から減算します。 |
+| `SetY(float y)` | `position` の Y 成分を設定します。 |
+| `AddY(float y)` | `position` の Y 成分に加算します。 |
+| `SubY(float y)` | `position` の Y 成分から減算します。 |
+| `SetZ(float z)` | `position` の Z 成分を設定します。 |
+| `AddZ(float z)` | `position` の Z 成分に加算します。 |
+| `SubZ(float z)` | `position` の Z 成分から減算します。 |
 
 ```csharp
 using UnityExtensions;
@@ -116,10 +116,10 @@ public class Example : MonoBehaviour
 
 ### RectTransformExtensions
 
-Extension methods for `RectTransform`, offering safer alternatives to `sizeDelta`.
+`sizeDelta` を使用するよりも安全な `RectTransform` の拡張メソッドです。
 
 #### `SetSize(float width, float height)`
-Sets the width and height of the `RectTransform` using `SetSizeWithCurrentAnchors`.
+`SetSizeWithCurrentAnchors` を使用して `RectTransform` の幅と高さを設定します。
 
 ```csharp
 using UnityExtensions;
@@ -136,7 +136,7 @@ public class Example : MonoBehaviour
 ```
 
 #### `SetSize(Vector2 size)`
-Sets the size of the `RectTransform` using a `Vector2`.
+`Vector2` を使用して `RectTransform` のサイズを設定します。
 
 ```csharp
 using UnityExtensions;
@@ -154,7 +154,7 @@ public class Example : MonoBehaviour
 ```
 
 #### `SetWidth(float width)`
-Sets only the width of the `RectTransform`.
+`RectTransform` の幅のみを設定します。
 
 ```csharp
 using UnityExtensions;
@@ -171,7 +171,7 @@ public class Example : MonoBehaviour
 ```
 
 #### `SetHeight(float height)`
-Sets only the height of the `RectTransform`.
+`RectTransform` の高さのみを設定します。
 
 ```csharp
 using UnityExtensions;
@@ -188,7 +188,7 @@ public class Example : MonoBehaviour
 ```
 
 #### `GetSize()`
-Gets the actual rendered size of the `RectTransform` via `rect.size`, which is more reliable than `sizeDelta`.
+`rect.size` を通じて `RectTransform` の実際の描画サイズを取得します。`sizeDelta` よりも信頼性が高い方法です。
 
 ```csharp
 using UnityExtensions;
@@ -206,7 +206,7 @@ public class Example : MonoBehaviour
 ```
 
 #### `SetFullStretch(float left = 0, float right = 0, float top = 0, float bottom = 0)`
-Configures the `RectTransform` to fully stretch (anchor min `(0,0)`, anchor max `(1,1)`) with optional edge offsets.
+`RectTransform` を完全にストレッチするよう設定します（アンカー min `(0,0)`、アンカー max `(1,1)`）。各辺のオフセットをオプションで指定できます。
 
 ```csharp
 using UnityExtensions;
@@ -218,18 +218,18 @@ public class Example : MonoBehaviour
     {
         RectTransform rectTransform = (RectTransform)transform;
 
-        // Full stretch with no offsets
+        // オフセットなしで完全にストレッチ
         rectTransform.SetFullStretch();
 
-        // Full stretch with 10px padding on each side
+        // 各辺に 10px のパディングを設定してストレッチ
         rectTransform.SetFullStretch(left: 10f, right: 10f, top: 10f, bottom: 10f);
     }
 }
 ```
 
 #### `GetWorldCorners(Span<Vector3> fourCornersSpan)`
-Gets the four corners of the rectangle in world space. The `Span<Vector3>` must have a length of at least 4.  
-Corner order: bottom-left, top-left, top-right, bottom-right.
+ワールド空間における矩形の 4 隅を取得します。`Span<Vector3>` の長さは 4 以上である必要があります。  
+隅の順序: 左下、左上、右上、右下。
 
 ```csharp
 using System;
@@ -257,8 +257,8 @@ public class Example : MonoBehaviour
 ```
 
 #### `GetLocalCorners(Span<Vector3> fourCornersSpan)`
-Gets the four corners of the rectangle in the local space of the `RectTransform`. The `Span<Vector3>` must have a length of at least 4.  
-Corner order: bottom-left, top-left, top-right, bottom-right.
+`RectTransform` のローカル空間における矩形の 4 隅を取得します。`Span<Vector3>` の長さは 4 以上である必要があります。  
+隅の順序: 左下、左上、右上、右下。
 
 ```csharp
 using System;
@@ -288,12 +288,12 @@ public class Example : MonoBehaviour
 
 ### VectorExtensions
 
-Extension methods for `Vector3`.
+`Vector3` に対する拡張メソッドです。
 
-| Method | Description |
-|--------|-------------|
-| `XZ()` | Extracts the X and Z components as a `Vector2`. |
-| `YZ()` | Extracts the Y and Z components as a `Vector2`. |
+| メソッド | 説明 |
+|--------|------|
+| `XZ()` | X 成分と Z 成分を `Vector2` として取得します。 |
+| `YZ()` | Y 成分と Z 成分を `Vector2` として取得します。 |
 
 ```csharp
 using UnityExtensions;
@@ -310,5 +310,5 @@ public class Example : MonoBehaviour
 }
 ```
 
-## License
-This library is released under the MIT license.
+## ライセンス
+このライブラリは MIT ライセンスのもとで公開されています。

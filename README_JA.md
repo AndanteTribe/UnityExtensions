@@ -89,15 +89,15 @@ public class Example : MonoBehaviour
 
 | メソッド | 説明 |
 |--------|------|
-| `SetX(float x)` | `position` の X 成分を設定します。 |
-| `AddX(float x)` | `position` の X 成分に加算します。 |
-| `SubX(float x)` | `position` の X 成分から減算します。 |
-| `SetY(float y)` | `position` の Y 成分を設定します。 |
-| `AddY(float y)` | `position` の Y 成分に加算します。 |
-| `SubY(float y)` | `position` の Y 成分から減算します。 |
-| `SetZ(float z)` | `position` の Z 成分を設定します。 |
-| `AddZ(float z)` | `position` の Z 成分に加算します。 |
-| `SubZ(float z)` | `position` の Z 成分から減算します。 |
+| `SetPosX(float x)` | `position` の X 成分を設定します。 |
+| `AddPosX(float x)` | `position` の X 成分に加算します。 |
+| `SubPosX(float x)` | `position` の X 成分から減算します。 |
+| `SetPosY(float y)` | `position` の Y 成分を設定します。 |
+| `AddPosY(float y)` | `position` の Y 成分に加算します。 |
+| `SubPosY(float y)` | `position` の Y 成分から減算します。 |
+| `SetPosZ(float z)` | `position` の Z 成分を設定します。 |
+| `AddPosZ(float z)` | `position` の Z 成分に加算します。 |
+| `SubPosZ(float z)` | `position` の Z 成分から減算します。 |
 
 ```csharp
 using UnityExtensions;
@@ -107,9 +107,9 @@ public class Example : MonoBehaviour
 {
     private void Update()
     {
-        transform.SetX(1.0f);
-        transform.AddY(0.1f);
-        transform.SubZ(0.5f);
+        transform.SetPosX(1.0f);
+        transform.AddPosY(0.1f);
+        transform.SubPosZ(0.5f);
     }
 }
 ```

@@ -1,16 +1,12 @@
 #nullable enable
 
-using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-using UnityExtensions;
 
-namespace UnityExtentions.Tests
+namespace UnityExtensions.Tests
 {
-    public class RectTransformTest: MonoBehaviour
+    public class RectTransformTest
     {
-        private int _value = 1;
         private RectTransform _rectTransform;
 
         [OneTimeSetUp]

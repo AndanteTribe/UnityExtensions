@@ -7,7 +7,7 @@ namespace UnityExtensions.Tests
 {
     public class RectTransformTest
     {
-        private RectTransform _rectTransform;
+        private RectTransform _rectTransform = null!;
 
         [OneTimeSetUp]
         public void BeforeAll()

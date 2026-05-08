@@ -1,0 +1,40 @@
+#nullable enable
+
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.TestTools;
+using UnityExtensions;
+
+namespace UnityExtentions.Tests
+{
+    public class RectTransformTest: MonoBehaviour
+    {
+        private int _value = 1;
+        private RectTransform _rectTransform;
+
+        [OneTimeSetUp]
+        public void BeforeAll()
+        {
+            var targetGameObject = new GameObject("Test");
+            _rectTransform = targetGameObject.AddComponent<RectTransform>();
+        }
+
+        [Test]
+        [TestCase(100f,100f)]
+        [TestCase(0f,0f)]
+        [TestCase(-100f, -100f)]
+        [TestCase(float.MaxValue, float.MinValue)]
+        [TestCase(float.Epsilon, -float.Epsilon)]
+        [TestCase(0.1f,0.01f)]
+        [TestCase(-0.1f,1.5f)]
+        [TestCase(-50f,0f)]
+        [TestCase(0f,75f)]
+        public void SetSizeFloatTest(float width, float height)
+        {
+            _rectTransform.SetSize(width, height);
+            Assert.That(_rectTransform.rect.width, Is.EqualTo(width));
+            Assert.That(_rectTransform.rect.height, Is.EqualTo(height));
+        }
+    }
+}

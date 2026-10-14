@@ -1,9 +1,12 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Pool;
+using UnityExtensions.Internal;
 
 namespace UnityExtensions
 {
@@ -123,6 +126,71 @@ namespace UnityExtensions
                 written += literal.Length;
                 container.Dispose();
                 container = newContainer;
+            }
+        }
+
+        /// <summary>
+        /// Serializes a game object, its components, and all descendants to compact JSON.
+        /// </summary>
+        /// <param name="gameObject">The root game object.</param>
+        /// <param name="includeScene">Whether to include the scene name in the root path.</param>
+        /// <returns>A JSON object containing the root path and tree, or JSON null if the game object is null.</returns>
+        /// <remarks>
+        /// Includes inactive children. Missing scripts are represented as null component entries.
+        /// Uses EditorJsonUtility in the Editor. In players, uses com.unity.runtime-scene-serialization
+        /// when the package is installed, otherwise JsonUtility, which does not support GameObject.
+        /// </remarks>
+        /// <exception cref="ArgumentException">
+        /// Called in a player with a non-null game object when com.unity.runtime-scene-serialization is not installed.
+        /// </exception>
+        public static string GetHierarchyJson(this GameObject? gameObject, bool includeScene = true)
+        {
+            if (gameObject == null)
+            {
+                return "null";
+            }
+
+            var writer = new JsonWriter();
+            try
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("root");
+                writer.WriteStringValue(gameObject.GetHierarchyPath(includeScene));
+                writer.WritePropertyName("tree");
+                using var _ = ListPool<Component>.Get(out var components);
+                WriteNode(gameObject, ref writer, components);
+                writer.WriteEndObject();
+                return writer.ToString();
+            }
+            finally
+            {
+                writer.Dispose();
+            }
+
+            static void WriteNode(GameObject target, ref JsonWriter writer, List<Component> components)
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("gameObject");
+                writer.WriteObjectValue(target);
+
+                writer.WritePropertyName("components");
+                writer.WriteStartArray();
+                target.GetComponents(components);
+                foreach (var component in components)
+                {
+                    writer.WriteObjectValue(component);
+                }
+                writer.WriteEndArray();
+
+                writer.WritePropertyName("children");
+                writer.WriteStartArray();
+                var transform = target.transform;
+                for (var i = 0; i < transform.childCount; i++)
+                {
+                    WriteNode(transform.GetChild(i).gameObject, ref writer, components);
+                }
+                writer.WriteEndArray();
+                writer.WriteEndObject();
             }
         }
     }

@@ -15,7 +15,7 @@
         {
             "name": "com.unity.runtime-scene-serialization",
             "expression": "",
-            "define": "ENABLE_SERIALIZTION"
+            "define": "ENABLE_SERIALIZATION"
         }
     ],
     "noEngineReferences": false

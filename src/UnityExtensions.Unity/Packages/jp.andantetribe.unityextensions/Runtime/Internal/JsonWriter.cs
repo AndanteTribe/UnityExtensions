@@ -117,7 +117,7 @@ namespace UnityExtensions.Internal
 #if UNITY_EDITOR
             WriteRawValue(UnityEditor.EditorJsonUtility.ToJson(value));
 #else
-#if ENABLE_SERIALIZTION
+#if ENABLE_SERIALIZATION
             // Select scene-object adapters instead of the UnityEngine.Object reference adapter.
             var json = value switch
             {

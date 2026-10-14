@@ -1,7 +1,9 @@
 {
     "name": "UnityExtensions",
     "rootNamespace": "UnityExtensions",
-    "references": [],
+    "references": [
+        "GUID:3cf9982a6ed8c3e459dd853b4794bd75"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -9,6 +11,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.runtime-scene-serialization",
+            "expression": "",
+            "define": "ENABLE_SERIALIZTION"
+        }
+    ],
     "noEngineReferences": false
 }

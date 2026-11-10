@@ -40,9 +40,10 @@ namespace UnityExtensions
         /// <param name="gameObject">The target <see cref="GameObject"/>.</param>
         /// <typeparam name="T">The type of component to retrieve.</typeparam>
         /// <returns>The retrieved component instance. If the component cannot be obtained, returns System's null.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T? SafeGetComponent<T>(this GameObject gameObject) where T : Component
         {
-            gameObject.TryGetComponent<T>(out var component);
+            _ = gameObject.TryGetComponent<T>(out var component);
             return component;
         }
 
@@ -71,7 +72,6 @@ namespace UnityExtensions
         /// ]]>
         /// </code>
         /// </example>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetHierarchyPath(this GameObject? gameObject, bool includeScene = true)
         {
             if (gameObject == null)
@@ -99,7 +99,6 @@ namespace UnityExtensions
                 container.Dispose();
             }
 
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             static void GetTransformPath(Transform transform, ref NativeArray<char> container, ref int written)
             {
                 if (transform.parent != null)
@@ -119,13 +118,18 @@ namespace UnityExtensions
                     return;
                 }
 
-                var newSize = container.Length + literal.Length;
-                var newContainer = new NativeArray<char>(newSize, Allocator.Temp);
-                container.AsSpan().CopyTo(newContainer);
-                literal.CopyTo(newContainer.AsSpan()[written..]);
-                written += literal.Length;
-                container.Dispose();
-                container = newContainer;
+                AppendLiteralCore(ref container, ref written, literal);
+
+                static void AppendLiteralCore(ref NativeArray<char> container, ref int written, ReadOnlySpan<char> literal)
+                {
+                    var newSize = container.Length + literal.Length;
+                    var newContainer = new NativeArray<char>(newSize, Allocator.Temp);
+                    container.AsSpan().CopyTo(newContainer);
+                    literal.CopyTo(newContainer.AsSpan()[written..]);
+                    written += literal.Length;
+                    container.Dispose();
+                    container = newContainer;
+                }
             }
         }
 

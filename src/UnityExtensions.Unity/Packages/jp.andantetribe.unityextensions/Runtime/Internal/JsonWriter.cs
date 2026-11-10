@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System;
 using System.Runtime.CompilerServices;
@@ -153,12 +153,9 @@ namespace UnityExtensions.Internal
 
         public override string ToString()
         {
-            if (_disposed)
-            {
-                ThrowObjectDisposedException();
-            }
+            ThrowIfDisposed();
 
-            return _buffer.IsCreated ? _buffer.AsSpan()[.._written].ToString() : string.Empty;
+            return _buffer.IsCreated ? _buffer.AsSpan()[.._written].ToString() : "";
         }
 
         public void Dispose()
@@ -220,12 +217,10 @@ namespace UnityExtensions.Internal
             _buffer[_written++] = '"';
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void EnsureCapacity(int additionalLength)
         {
-            if (_disposed)
-            {
-                ThrowObjectDisposedException();
-            }
+            ThrowIfDisposed();
 
             var required = checked(_written + additionalLength);
             if (_buffer.IsCreated && required <= _buffer.Length)
@@ -233,18 +228,31 @@ namespace UnityExtensions.Internal
                 return;
             }
 
-            var capacity = Math.Max(required, _buffer.IsCreated ? checked(_buffer.Length * 2) : 256);
-            var buffer = new NativeArray<char>(capacity, Allocator.Temp, NativeArrayOptions.UninitializedMemory);
-            if (_buffer.IsCreated)
-            {
-                _buffer.AsSpan()[.._written].CopyTo(buffer.AsSpan());
-                _buffer.Dispose();
-            }
+            GrowCore(ref _buffer, _written, required);
 
-            _buffer = buffer;
+            static void GrowCore(ref NativeArray<char> buffer, int written, int required)
+            {
+                var capacity = Math.Max(required, buffer.IsCreated ? checked(buffer.Length * 2) : 256);
+                var newBuffer = new NativeArray<char>(capacity, Allocator.Temp, NativeArrayOptions.UninitializedMemory);
+                if (buffer.IsCreated)
+                {
+                    buffer.AsSpan()[..written].CopyTo(newBuffer.AsSpan());
+                    buffer.Dispose();
+                }
+
+                buffer = newBuffer;
+            }
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void ThrowObjectDisposedException() => throw new ObjectDisposedException(nameof(JsonWriter));
+        private readonly void ThrowIfDisposed()
+        {
+            if (_disposed)
+            {
+                ThrowObjectDisposedException();
+            }
+
+            static void ThrowObjectDisposedException() => throw new ObjectDisposedException(nameof(JsonWriter));
+        }
     }
 }

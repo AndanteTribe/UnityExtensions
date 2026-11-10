@@ -224,7 +224,6 @@ namespace UnityExtensions
         /// <param name="rectTransform">The target <see cref="RectTransform"/>.</param>
         /// <param name="fourCornersSpan">The <see cref="Span{T}"/> to store the retrieved corner coordinates.</param>
         /// <returns>The <see cref="ReadOnlySpan{T}"/> containing the retrieved corner coordinates.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ReadOnlySpan<Vector3> GetWorldCorners(this RectTransform rectTransform, in Span<Vector3> fourCornersSpan)
         {
             if (fourCornersSpan.IsEmpty || fourCornersSpan.Length < 4)
@@ -313,7 +312,15 @@ namespace UnityExtensions
         {
             var rect = rectTransform.rect;
             var (x, y, xMax, yMax) = (rect.x, rect.y, rect.xMax, rect.yMax);
-            stackalloc Vector3[] { new(x, y), new(x, yMax), new(xMax, yMax), new(xMax, y) }.TryCopyTo(fourCornersSpan);
+            if (fourCornersSpan.Length < 4)
+            {
+                return;
+            }
+
+            fourCornersSpan[0] = new Vector3(x, y);
+            fourCornersSpan[1] = new Vector3(x, yMax);
+            fourCornersSpan[2] = new Vector3(xMax, yMax);
+            fourCornersSpan[3] = new Vector3(xMax, y);
         }
     }
 }
